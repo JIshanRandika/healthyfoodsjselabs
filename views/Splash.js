@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     Platform, StyleSheet, View, Text,
-    Image, TouchableOpacity, Alert, Dimensions, TextInput, KeyboardAvoidingView
+    Image, TouchableOpacity, Alert, Dimensions, TextInput, KeyboardAvoidingView,ImageBackground
 } from 'react-native';
 
 export default class Myapp extends Component
@@ -23,7 +23,7 @@ export default class Myapp extends Component
         var that = this;
         setTimeout(function(){
             that.Hide_Splash_Screen();
-        }, 5000);
+        }, 1000);
     }
     static navigationOptions = {
         headerShown: false
@@ -44,54 +44,64 @@ export default class Myapp extends Component
 
         )
         return(
-            <View style = { styles.MainContainer }>
-                <KeyboardAvoidingView behavior={Platform.OS == "android" } style={{flex: 6, alignItems: 'center', width: Dimensions.get('window').width}}>
-                    <View style={{flex: 2,}}>
-                    </View>
+            <View style={styles.container}>
+                <ImageBackground source={require('../assets/images/background.png')} resizeMode="cover" style={styles.image}>
 
-                    <View style={{flex: 3,}}>
-                        <Image style={{
-                            width: Dimensions.get('window').width,
-                            height: Dimensions.get('window').width / 1.3
-                        }} source={require('../assets/images/logo.png')}/>
-                    </View>
-                    <View style={{flex: 1,}}>
-                    </View>
-                    <View style={{
-                        // flex: 1,
-                        alignSelf: 'center',
-                        width: 170,
-                        height: 50,
-                        backgroundColor: "#107e7d",
-                        borderRadius: 15,
-                        shadowColor: "#000",
-                        shadowOffset: {
-                            width: 0,
-                            height: 0,
-                        },
-                        shadowOpacity: 0.34,
-                        shadowRadius: 6.27,
 
-                        elevation: 10,
+                    <View style = { styles.MainContainer }>
 
-                    }}>
-                        <Text onPress={() => {
-                            this.props.navigation.push('OCR');
+                        <KeyboardAvoidingView behavior={Platform.OS == "android" } style={{flex: 6, alignItems: 'center', width: Dimensions.get('window').width}}>
+                            <View style={{flex: 2,}}>
+                            </View>
+
+                            <View style={{flex: 3,}}>
+                                <Image style={{
+                                    width: Dimensions.get('window').width,
+                                    height: Dimensions.get('window').width / 1.3
+                                }} source={require('../assets/images/logo.png')}/>
+                            </View>
+                            {/*<View style={{flex: ,}}>*/}
+                            {/*</View>*/}
+                            <View style={{
+                                // flex: 1,
+                                alignSelf: 'center',
+                                width: 170,
+                                height: 50,
+                                backgroundColor: "#107e7d",
+                                borderRadius: 15,
+                                shadowColor: "#000",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 0,
+                                },
+                                shadowOpacity: 0.34,
+                                shadowRadius: 6.27,
+
+                                elevation: 10,
+
+                            }}>
+                                <Text onPress={() => {
+                                    this.props.navigation.push('Home');
+                                }
+                                } style={{textAlign: 'center', color: '#ffffff', fontWeight: "bold", marginTop: 3, fontSize:25}}>
+                                    Start Now
+                                </Text>
+
+                            </View>
+                            <View style={{flex: 2,}}>
+                            </View>
+
+                        </KeyboardAvoidingView>
+
+                        {
+                            (this.state.isVisible === true) ? Splash_Screen : null
                         }
-                        } style={{textAlign: 'center', color: '#ffffff', fontWeight: "bold", marginTop: 3, fontSize:25}}>
-                            Start Now
-                        </Text>
-
-                    </View>
-                    <View style={{flex: 1,}}>
                     </View>
 
-                </KeyboardAvoidingView>
 
-                {
-                    (this.state.isVisible === true) ? Splash_Screen : null
-                }
+                </ImageBackground>
             </View>
+
         );
     }
 }
@@ -121,5 +131,12 @@ const styles = StyleSheet.create(
                 alignItems: 'center',
                 backgroundColor: '#ffffff',
                 flex:1,
-            },
+            }
+        ,container: {
+            flex: 1,
+        },
+        image: {
+            flex: 1,
+            justifyContent: "center"
+        },
     });

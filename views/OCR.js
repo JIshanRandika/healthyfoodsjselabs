@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
-import {Button, StyleSheet, Text, View, Image, SafeAreaView} from 'react-native';
+import {Button, StyleSheet, Text, View, Image, SafeAreaView,ImageBackground} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import ProgressCircle from 'react-native-progress/Circle';
 import TesseractOcr, {
     LANG_ENGLISH,
     useEventListener,
 } from 'react-native-tesseract-ocr';
-import * as Progress from 'react-native-progress';
 
+import * as Progress from 'react-native-progress';
 
 
 const DEFAULT_HEIGHT = 500;
@@ -116,14 +116,12 @@ function OCR({navigation}) {
             body: JSON.stringify({ ingredientArray: ingredientArray })
         };
 
-        await fetch(`https://healthyfoodssabra.herokuapp.com/api/check`,requestOptions)
+        await fetch(`http://192.168.8.100:8080/api/check`,requestOptions)
+            // http://192.168.8.100:8080/api/products
             .then(async response => {
                     const isJson = response.headers.get('content-type')?.includes('application/json');
 
-
                     const data = isJson && await response.json();
-
-
 
 
                     const testarray = ["a","s","as"]
@@ -152,153 +150,280 @@ function OCR({navigation}) {
 
     return (
 
-        <View style={styles.container}>
-            <Text style={styles.title}>Healthy Foods</Text>
-            <Text style={{fontSize:8, textAlign:"center", marginHorizontal:70}}>Take an image from Camera or Upload an image from your Gallery which includes ingredients you need to test.</Text>
-            <View style={styles.options}>
-                <View style={styles.button}>
-                    <Button
-                        color="#107E7DFF"
-                        disabled={isLoading}
-                        title="Camera"
-                        onPress={() => {
-                            recognizeFromCamera();
-                        }}
-                    />
-                </View>
-                <Text style={{marginTop:5}}>OR</Text>
-                <View style={styles.button}>
-                    <Button
-                        color="#107E7DFF"
-                        disabled={isLoading}
-                        title="Gallery"
-                        onPress={() => {
-                            recognizeFromPicker();
-                        }}
-                    />
-                </View>
-            </View>
-            {imgSrc && (
-                <View style={styles.imageContainer}>
-                    <Image style={styles.image} source={imgSrc} />
-                    {isLoading ? (
-                        <ProgressCircle showsText progress={progress} />
-                    ) : (
+        <View style={styles.bgcontainer}>
+            <ImageBackground source={require('../assets/images/background.png')} resizeMode="cover" style={styles.bgimage}>
 
-                        <Text>{text}</Text>
-
-                    )}
-                </View>
-
-            )}
-            <View style={styles.button}>
-                {/*<Button*/}
-                {/*    disabled={isLoading}*/}
-                {/*    title="Check"*/}
-                {/*    onPress={() => {*/}
-
-                {/*        var array = text.split(" ");*/}
-
-
-                {/*        var arraytest = ["HA", "HB","UA","A", "B", "UB", "UC","HC","HD","HE","UC","UD","UE", "UKA","HKD","HKE","HKC"]*/}
-                {/*        checkIngredient(arraytest);*/}
-
-                {/*        console.log(arraytest);*/}
-
-                {/*        navigation.navigate('Results')*/}
-
-                {/*    }}*/}
-                {/*/>*/}
-                <View style={{alignItems:"center"}}>
-                    <Text style={{fontSize:8, textAlign:"center", marginHorizontal:70}}>Process your data.</Text>
-
-                    <View style={{marginTop:10,width:200,marginBottom:10}}>
-                        <Button
-
-                            disabled={isLoading}
-                            title="Process"
-                            onPress={() => {
-                                // var arraytest = ["HA", "HB","UA","A", "B", "UB", "UC","HC","HD","HE","UC","UD","UE", "UKA","HKD","HKE","HKC"]
-
-                                setIspProcessStart(true)
-                                processDelay();
-
-                                var dataFromLabel = text.toLowerCase();
-
-                                // var array = dataFromLabel.split(/([!,?,.])/);
-
-                                // var array = text.split(/([!,?,.])/);
-
-                                // ====
-                                var array = dataFromLabel.split(/([!,?,.])/);
-
-                                console.log(array);
-
-
-                                var newarray=[];
-
-                                var arrayLength = array.length;
-                                for (var i = 0; i < arrayLength; i++) {
-                                    newarray.push(array[i].trim())
-                                }
-
-                                // ====
-
-                                console.log(newarray);
-
-                                checkIngredient(newarray);
-
-
-
-                            }}
-                        />
+                <View style={styles.container}>
+                    <Text style={styles.title}>Healthy Foods</Text>
+                    <Text style={{fontSize:8, textAlign:"center", marginHorizontal:70}}>Take an image from Camera or Upload an image from your Gallery which includes ingredients you need to test.</Text>
+                    <View style={styles.options}>
+                        <View style={styles.button}>
+                            <Button
+                                color="#107E7DFF"
+                                disabled={isLoading}
+                                title="Camera"
+                                onPress={() => {
+                                    recognizeFromCamera();
+                                }}
+                            />
+                        </View>
+                        <Text style={{marginTop:5}}>OR</Text>
+                        <View style={styles.button}>
+                            <Button
+                                color="#107E7DFF"
+                                disabled={isLoading}
+                                title="Gallery"
+                                onPress={() => {
+                                    recognizeFromPicker();
+                                }}
+                            />
+                        </View>
                     </View>
-
-
-
-                    {ispProcessStart && (
+                    {imgSrc && (
                         <View style={styles.imageContainer}>
-                            {isComplete ? (
-                                <Progress.CircleSnail color={['red', 'green', 'blue']} />
-                                // <Text>Process !</Text>
+                            <Image style={styles.image} source={imgSrc} />
+                            {isLoading ? (
+                                <ProgressCircle showsText progress={progress} />
                             ) : (
 
-                                <Text style={{color:"#d5573b",fontWeight:'bold'}}>Completed your Process !</Text>
+                                <Text>{text}</Text>
 
                             )}
                         </View>
 
                     )}
+                    <View style={styles.button}>
+                        {/*<Button*/}
+                        {/*    disabled={isLoading}*/}
+                        {/*    title="Check"*/}
+                        {/*    onPress={() => {*/}
 
-                    <Text style={{fontSize:8, textAlign:"center", marginHorizontal:70,marginTop:10}}>View your Results.</Text>
+                        {/*        var array = text.split(" ");*/}
 
-                    <View style={{width:200,marginTop:10}}>
-                        <Button
-                            disabled={isLoading}
-                            title="View Results"
-                            onPress={() => {
-                                setIsComplete(true)
-                                setIspProcessStart(null)
 
-                                navigation.navigate('YourResult',
-                                    ingredientList
-                                )
+                        {/*        var arraytest = ["HA", "HB","UA","A", "B", "UB", "UC","HC","HD","HE","UC","UD","UE", "UKA","HKD","HKE","HKC"]*/}
+                        {/*        checkIngredient(arraytest);*/}
 
-                            }}
-                        />
+                        {/*        console.log(arraytest);*/}
+
+                        {/*        navigation.navigate('Results')*/}
+
+                        {/*    }}*/}
+                        {/*/>*/}
+                        <View style={{alignItems:"center"}}>
+                            {/*<Text style={{fontSize:8, textAlign:"center", marginHorizontal:70}}>Process your data.</Text>*/}
+
+                            {/*<View style={{marginTop:10,width:200,marginBottom:10}}>*/}
+                            {/*    <Button*/}
+
+                            {/*        disabled={isLoading}*/}
+                            {/*        title="Process"*/}
+                            {/*        onPress={() => {*/}
+                            {/*            // var arraytest = ["HA", "HB","UA","A", "B", "UB", "UC","HC","HD","HE","UC","UD","UE", "UKA","HKD","HKE","HKC"]*/}
+
+                            {/*            setIspProcessStart(true)*/}
+                            {/*            processDelay();*/}
+
+                            {/*            var dataFromLabel = text.toLowerCase();*/}
+
+                            {/*            // var array = dataFromLabel.split(/([!,?,.])/);*/}
+
+                            {/*            // var array = text.split(/([!,?,.])/);*/}
+
+                            {/*            // ====*/}
+                            {/*            var array = dataFromLabel.split(/([!,?,.])/);*/}
+
+                            {/*            console.log(array);*/}
+
+
+                            {/*            var newarray=[];*/}
+
+                            {/*            var arrayLength = array.length;*/}
+                            {/*            for (var i = 0; i < arrayLength; i++) {*/}
+                            {/*                newarray.push(array[i].trim())*/}
+                            {/*            }*/}
+
+                            {/*            // ====*/}
+
+                            {/*            console.log(newarray);*/}
+
+                            {/*            checkIngredient(newarray);*/}
+
+
+
+                            {/*        }}*/}
+                            {/*    />*/}
+                            {/*</View>*/}
+
+
+
+
+                            {!ispProcessStart && (
+                                <View style={styles.imageContainer} style={{alignItems:'center'}}>
+                                    {!isComplete ? (
+                                        // <Progress.CircleSnail color={['red', 'green', 'blue']} />
+                                        <Text>asd</Text>
+                                    ) : (
+                                        <View>
+                                            <Text style={{fontSize:8, textAlign:"center", marginHorizontal:70}}>Process your data.</Text>
+
+                                            <View style={{marginTop:10,marginBottom:10}}>
+                                                <Button
+
+                                                    disabled={isLoading}
+                                                    title="Process"
+                                                    onPress={() => {
+                                                        // var arraytest = ["HA", "HB","UA","A", "B", "UB", "UC","HC","HD","HE","UC","UD","UE", "UKA","HKD","HKE","HKC"]
+
+                                                        setIspProcessStart(true)
+                                                        processDelay();
+
+                                                        var dataFromLabel = text.toLowerCase();
+
+                                                        // var array = dataFromLabel.split(/([!,?,.])/);
+
+                                                        // var array = text.split(/([!,?,.])/);
+
+                                                        // ====
+                                                        var array = dataFromLabel.split(/([!,?,.])/);
+
+                                                        console.log(array);
+
+
+                                                        var newarray=[];
+
+                                                        var arrayLength = array.length;
+                                                        for (var i = 0; i < arrayLength; i++) {
+                                                            newarray.push(array[i].trim())
+                                                        }
+
+                                                        // ====
+
+                                                        console.log(newarray);
+
+                                                        checkIngredient(newarray);
+
+
+
+                                                    }}
+                                                />
+                                            </View>
+                                        </View>
+
+
+                                    )}
+                                </View>
+                            )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            {ispProcessStart && (
+                                <View style={styles.imageContainer}>
+                                    {isComplete ? (
+                                        <Progress.CircleSnail color={['red', 'green', 'blue']} />
+                                        // <Text>Process !</Text>
+                                    ) : (
+
+                                        <Text style={{color:"#d5573b",fontWeight:'bold'}}>Completed your Process !</Text>
+
+                                    )}
+                                </View>
+
+                            )}
+
+                            {/*<Text style={{fontSize:8, textAlign:"center", marginHorizontal:70,marginTop:10}}>View your Results.</Text>*/}
+
+
+                            {ispProcessStart && (
+                                <View style={styles.imageContainer}>
+                                    {isComplete ? (
+                                        // <Progress.CircleSnail color={['red', 'green', 'blue']} />
+                                        <Text style={{color:"#107e7d",fontWeight:'bold'}}>Processing....</Text>
+                                    ) : (
+                                        <View>
+                                            <Text style={{fontSize:8, textAlign:"center", marginHorizontal:70,marginTop:10}}>View your Results.</Text>
+
+                                            <View style={{marginTop:10}}>
+                                                <Button
+                                                    color="#D5573B"
+                                                    disabled={isLoading}
+                                                    title="View Results"
+                                                    onPress={() => {
+                                                        setIsComplete(true)
+                                                        setIspProcessStart(null)
+
+                                                        navigation.navigate('YourResult',
+                                                            ingredientList
+                                                        )
+
+                                                    }}
+                                                />
+                                            </View>
+                                        </View>
+
+
+                                    )}
+                                </View>
+                            )}
+
+
+
+
+
+                            {/*<View style={{width:200,marginTop:10}}>*/}
+                            {/*    <Button*/}
+                            {/*        disabled={isLoading}*/}
+                            {/*        title="View Results"*/}
+                            {/*        onPress={() => {*/}
+                            {/*            setIsComplete(true)*/}
+                            {/*            setIspProcessStart(null)*/}
+
+                            {/*            navigation.navigate('YourResult',*/}
+                            {/*                ingredientList*/}
+                            {/*            )*/}
+
+                            {/*        }}*/}
+                            {/*    />*/}
+                            {/*</View>*/}
+
+
+
+                            {/*<View style={{width:200,marginTop:10}}>*/}
+                            {/*    <Button*/}
+                            {/*        disabled={isLoading}*/}
+                            {/*        title="Search"*/}
+                            {/*        onPress={() => {*/}
+
+                            {/*            navigation.navigate('SearchOption'*/}
+                            {/*            )*/}
+
+                            {/*        }}*/}
+                            {/*    />*/}
+                            {/*</View>*/}
+
+                        </View>
+
+
+
                     </View>
+
+
 
                 </View>
 
-
-
-            </View>
-
-
-
+            </ImageBackground>
         </View>
-
-
 
     );
 }
@@ -338,6 +463,14 @@ const styles = StyleSheet.create({
         color: '#333333',
         marginBottom: 5,
     },
+    bgcontainer: {
+        flex: 1,
+    },
+    bgimage: {
+        flex: 1,
+        justifyContent: "center"
+    },
+
 });
 
 export default OCR;

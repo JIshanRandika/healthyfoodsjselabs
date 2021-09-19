@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, FlatList, StatusBar} from 'react-native';
+import {Button, StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, FlatList, StatusBar,ImageBackground} from 'react-native';
 import * as Progress from 'react-native-progress';
 
 
@@ -109,40 +109,54 @@ export default class Screen extends React.Component {
             };
 
             return (
+                <View style={styles.bgcontainer}>
+                    <ImageBackground source={require('../assets/images/background.png')} resizeMode="cover" style={styles.image}>
+                        <Text style={styles.titleText}>Your Results</Text>
 
-                <SafeAreaView>
-                    <View style={{alignItems:"center", marginTop:20, marginBottom:10}}>
-                        <Text style={{fontSize:30,fontWeight:"bold",color:printStatus ==="Healthy"? "#107e7d" :"#d5573b"}}>{printStatus}</Text>
-                    </View>
-                    <View style={{alignItems:"center"}}>
-                        <Progress.Pie progress={avg} size={100} showsText={true} duration={100} color={color}/>
-                    </View>
-                    <View style={{alignItems:"center", marginTop:10, marginBottom:10}}>
-                        <Text style={{fontSize:10,fontWeight:"bold",alignItems:"center"}}>{avgnum}% Unhealthy</Text>
-                    </View>
+                        {/*<View style={{flex:1}}>*/}
 
-                    {connection && (
-                        <View style={{alignItems:'center'}} >
-                            <Text style={{color:"#d5573b",fontWeight:'bold', fontSize:30,textAlign:'center'}}>Sorry, I can't identify your processed data</Text>
+                        {/*</View>*/}
 
-                            <Text style={{color:"#d5573b",fontWeight:'bold', fontSize:30,textAlign:'center'}}></Text>
+                        <View style={{flex:7}}>
+                            <SafeAreaView>
 
-                            <Text style={{color:"#d5573b",fontWeight:'bold', fontSize:30,textAlign:'center'}}>Please check your internet connection !</Text>
+                                <View style={{alignItems:"center", marginTop:20, marginBottom:10}}>
+                                    <Text style={{fontSize:30,fontWeight:"bold",color:printStatus ==="Healthy"? "#107e7d" :"#d5573b"}}>{printStatus}</Text>
+                                </View>
+                                <View style={{alignItems:"center"}}>
+                                    <Progress.Pie progress={avg} size={100} showsText={true} duration={100} color={color}/>
+                                </View>
+                                <View style={{alignItems:"center", marginTop:10, marginBottom:10}}>
+                                    <Text style={{fontSize:10,fontWeight:"bold",alignItems:"center"}}>{avgnum}% Unhealthy</Text>
+                                </View>
+
+                                {connection && (
+                                    <View style={{alignItems:'center'}} >
+                                        <Text style={{color:"#d5573b",fontWeight:'bold', fontSize:30,textAlign:'center'}}>Sorry, I can't identify your processed data</Text>
+
+                                        <Text style={{color:"#d5573b",fontWeight:'bold', fontSize:30,textAlign:'center'}}></Text>
+
+                                        <Text style={{color:"#d5573b",fontWeight:'bold', fontSize:30,textAlign:'center'}}>Please check your internet connection !</Text>
 
 
 
+                                    </View>
+
+                                )}
+                                <FlatList
+                                    style={{height:"50%"}}
+                                    data={IngredientData}
+                                    renderItem={renderItem}
+                                    keyExtractor={(item) => item._id}
+                                    extraData={selectedId}
+                                />
+
+                            </SafeAreaView>
                         </View>
 
-                    )}
-                    <FlatList
-                        style={{height:"70%"}}
-                        data={IngredientData}
-                        renderItem={renderItem}
-                        keyExtractor={(item) => item._id}
-                        extraData={selectedId}
-                    />
+                    </ImageBackground>
+                </View>
 
-                </SafeAreaView>
             );
         };
 
@@ -162,10 +176,24 @@ export default class Screen extends React.Component {
                 fontWeight:"bold",
                 textAlign:"center"
             },
+            bgcontainer: {
+                flex: 1,
+            },
+            image: {
+                flex: 1,
+                justifyContent: "center"
+            },
+            titleText:{
+                flex:1,
+                fontSize: 22,
+                fontWeight: "bold",
+                textAlign: "center",
+                color: "white",
+            },
         });
 
         return (
-           <App/>
+            <App/>
         )
     }
 }
