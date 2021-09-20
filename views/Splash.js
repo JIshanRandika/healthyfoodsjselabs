@@ -47,7 +47,6 @@ export default class Myapp extends Component
             <View style={styles.container}>
                 <ImageBackground source={require('../assets/images/background.png')} resizeMode="cover" style={styles.image}>
 
-
                     <View style = { styles.MainContainer }>
 
                         <KeyboardAvoidingView behavior={Platform.OS == "android" } style={{flex: 6, alignItems: 'center', width: Dimensions.get('window').width}}>

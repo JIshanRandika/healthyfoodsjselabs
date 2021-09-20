@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, StyleSheet, Text, View, Image, SafeAreaView,ImageBackground} from 'react-native';
+import {Button, StyleSheet, Text, View, Image, SafeAreaView,ImageBackground,ScrollView,StatusBar} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import ProgressCircle from 'react-native-progress/Circle';
 import TesseractOcr, {
@@ -150,11 +150,19 @@ function OCR({navigation}) {
 
     return (
 
-        <View style={styles.bgcontainer}>
-            <ImageBackground source={require('../assets/images/background.png')} resizeMode="cover" style={styles.bgimage}>
+        // <View style={styles.bgcontainer}>
+        //     <ImageBackground source={require('../assets/images/background.png')} resizeMode="cover" style={styles.bgimage}>
 
                 <View style={styles.container}>
-                    <Text style={styles.title}>Healthy Foods</Text>
+                    <View style={styles.bgcontainer}>
+                        <ImageBackground source={require('../assets/images/background.png')} resizeMode="cover" style={styles.bgimage}>
+                            <View style={{flex:1}}>
+                                <Text style={styles.titleText}>Search by Image</Text>
+                            </View>
+                            <View style={{flex:4}}>
+
+
+                        <Text style={styles.title}>Healthy Foods</Text>
                     <Text style={{fontSize:8, textAlign:"center", marginHorizontal:70}}>Take an image from Camera or Upload an image from your Gallery which includes ingredients you need to test.</Text>
                     <View style={styles.options}>
                         <View style={styles.button}>
@@ -185,8 +193,14 @@ function OCR({navigation}) {
                             {isLoading ? (
                                 <ProgressCircle showsText progress={progress} />
                             ) : (
-
-                                <Text>{text}</Text>
+                                <SafeAreaView style={{height:80, width:"50%"}}>
+                                    <ScrollView style={styles.scrollView}>
+                                        <Text style={styles.text}>
+                                            {text}
+                                        </Text>
+                                    </ScrollView>
+                                </SafeAreaView>
+                                // <Text></Text>
 
                             )}
                         </View>
@@ -267,7 +281,7 @@ function OCR({navigation}) {
                                         <View>
                                             <Text style={{fontSize:8, textAlign:"center", marginHorizontal:70}}>Process your data.</Text>
 
-                                            <View style={{marginTop:10,marginBottom:10}}>
+                                            <View style={{marginTop:5,marginBottom:10}}>
                                                 <Button
 
                                                     disabled={isLoading}
@@ -352,9 +366,9 @@ function OCR({navigation}) {
                                         <Text style={{color:"#107e7d",fontWeight:'bold'}}>Processing....</Text>
                                     ) : (
                                         <View>
-                                            <Text style={{fontSize:8, textAlign:"center", marginHorizontal:70,marginTop:10}}>View your Results.</Text>
+                                            <Text style={{fontSize:8, textAlign:"center", marginHorizontal:70,marginTop:1}}>View your Results.</Text>
 
-                                            <View style={{marginTop:10}}>
+                                            <View style={{marginTop:1}}>
                                                 <Button
                                                     color="#D5573B"
                                                     disabled={isLoading}
@@ -417,13 +431,14 @@ function OCR({navigation}) {
 
 
                     </View>
-
+                            </View>
+                        </ImageBackground>
+                    </View>
 
 
                 </View>
 
-            </ImageBackground>
-        </View>
+
 
     );
 }
@@ -441,7 +456,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     button: {
-        marginHorizontal: 10,
+        marginHorizontal: 60,
 
     },
     imageContainer: {
@@ -469,6 +484,27 @@ const styles = StyleSheet.create({
     bgimage: {
         flex: 1,
         justifyContent: "center"
+    },
+    titleText:{
+        flex:1,
+        fontSize: 22,
+        fontWeight: "bold",
+        textAlign: "center",
+        color: "white",
+    },
+    scrollContainer: {
+        flex: 1,
+        paddingTop: StatusBar.currentHeight,
+    },
+    scrollView: {
+        backgroundColor: '#2b2d42',
+        marginHorizontal: 10,
+    },
+    text: {
+        paddingVertical:4,
+        paddingHorizontal:10,
+        fontSize: 8,
+        color:"white"
     },
 
 });
