@@ -1,5 +1,17 @@
 import React, {useState} from 'react';
-import {Button, StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, FlatList, StatusBar,ImageBackground} from 'react-native';
+import {
+    Button,
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    TouchableOpacity,
+    SafeAreaView,
+    FlatList,
+    StatusBar,
+    ImageBackground,
+    Alert,
+} from 'react-native';
 import * as Progress from 'react-native-progress';
 
 
@@ -9,11 +21,16 @@ export default class Screen extends React.Component {
     render() {
 
         // const [isConnect, setIsConnect] = useState(false);
+        // const onPressIngredient = () => setCount(prevCount => prevCount + 1);
 
         var connection = false;
-        const Item = ({ item, onPress, backgroundColor, textColor }) => (
+        const Item = ({ item, backgroundColor, textColor }) => (
 
-            <TouchableOpacity onPress={onPress}
+
+            <TouchableOpacity
+                // onPress={onPress}
+                onPress={()=>
+                {Alert.alert(item.ingredientName.charAt(0).toUpperCase() + item.ingredientName.slice(1)+"",""+item.description)}}
                               style={{
                                   // flex: 1,
                                   marginTop:"3%",
@@ -38,7 +55,9 @@ export default class Screen extends React.Component {
                               }}
 
             >
-                <Text style={{fontSize: 20, fontWeight:"bold", textAlign:"center",color:"#ffffff"}}>{item.ingredientName} is {item.status}</Text>
+
+
+                <Text style={{fontSize: 20, fontWeight:"bold", textAlign:"center",color:"#ffffff"}}>{item.ingredientName.charAt(0).toUpperCase() + item.ingredientName.slice(1)} is {item.status ==="Healthy"? "Safe":"Risky"}</Text>
 
 
             </TouchableOpacity>
@@ -56,7 +75,7 @@ export default class Screen extends React.Component {
         }
 
 
-        let printStatus = 'Healthy';
+        let printStatus = 'Safe';
         let countAll=0;
         let countUnhealthy=0;
         let countHealthy=0;
@@ -85,7 +104,7 @@ export default class Screen extends React.Component {
             avg=countUnhealthy/(countAll-countUnknown)
             if(avg>0.5){
                 color='rgb(213,87,59)'
-                printStatus = 'Unhealthy'
+                printStatus = 'Risky'
             }
             avgnum=Math.round(avg*100);
 
@@ -121,13 +140,15 @@ export default class Screen extends React.Component {
                             <SafeAreaView>
 
                                 <View style={{alignItems:"center", marginTop:20, marginBottom:10}}>
-                                    <Text style={{fontSize:30,fontWeight:"bold",color:printStatus ==="Healthy"? "#107e7d" :"#d5573b"}}>{printStatus}</Text>
+                                    <Text style={{fontSize:30,fontWeight:"bold",color:printStatus ==="Safe"? "#107e7d" :"#d5573b"}}>{printStatus}</Text>
                                 </View>
                                 <View style={{alignItems:"center"}}>
                                     <Progress.Pie progress={avg} size={100} showsText={true} duration={100} color={color}/>
                                 </View>
                                 <View style={{alignItems:"center", marginTop:10, marginBottom:10}}>
-                                    <Text style={{fontSize:10,fontWeight:"bold",alignItems:"center"}}>{avgnum}% Unhealthy</Text>
+                                    <Text style={{fontSize:10,fontWeight:"bold",alignItems:"center"}}>{avgnum}% Ingredients Risky</Text>
+                                    <Text style={{fontSize:10,alignItems:"center",width:"50%",textAlign:"center"}}>These data results may represent only long term usage or overuse.
+                                    </Text>
                                 </View>
 
                                 {connection && (
@@ -144,7 +165,7 @@ export default class Screen extends React.Component {
 
                                 )}
                                 <FlatList
-                                    style={{height:"50%"}}
+                                    style={{height:"47%"}}
                                     data={IngredientData}
                                     renderItem={renderItem}
                                     keyExtractor={(item) => item._id}

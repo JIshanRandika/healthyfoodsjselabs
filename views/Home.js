@@ -205,17 +205,13 @@ export default class Home extends Component {
         }
 
 
-
-
-
-
-        const searchProduct = async (productName) => {
+        const searchProduct = async (name) => {
 
 
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ searchProductName: productName })
+                body: JSON.stringify({ searchProductName: name })
             };
 
             await fetch(`https://healthyfoodssabra.herokuapp.com/api/product/ingredient`,requestOptions)
@@ -260,7 +256,7 @@ export default class Home extends Component {
 
                         const items = this.state.selectedItems;
                         items.push(item)
-                        this.setState({newselect:item.productName})
+                        this.setState({newselect:item.name})
                         this.setState({ selectedItems: items });
 
                     }}
