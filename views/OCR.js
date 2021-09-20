@@ -116,7 +116,7 @@ function OCR({navigation}) {
             body: JSON.stringify({ ingredientArray: ingredientArray })
         };
 
-        await fetch(`http://192.168.8.100:8080/api/check`,requestOptions)
+        await fetch(`https://healthyfoodssabra.herokuapp.com/api/check`,requestOptions)
             // http://192.168.8.100:8080/api/products
             .then(async response => {
                     const isJson = response.headers.get('content-type')?.includes('application/json');

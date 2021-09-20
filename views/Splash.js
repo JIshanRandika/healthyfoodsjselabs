@@ -23,7 +23,7 @@ export default class Myapp extends Component
         var that = this;
         setTimeout(function(){
             that.Hide_Splash_Screen();
-        }, 1000);
+        }, 5000);
     }
     static navigationOptions = {
         headerShown: false
