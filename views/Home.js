@@ -107,10 +107,6 @@ const styles = StyleSheet.create({
 
 
 
-
-
-
-
 // ================
 
 
@@ -118,6 +114,7 @@ export default class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            allProducts:[],
             ingredientList:[],
             newselect:'Search by Product',
             productSelected: true,
@@ -129,15 +126,25 @@ export default class Home extends Component {
                 //     id: 7,
                 //     name: 'Go',
                 // },
-                {
-                    id: 8,
-                    name: 'Swift',
-                }
+                // {
+                //     id: 8,
+                //     name: 'Swift',
+                // }
             ]
         }
     }
 
+// ========================
+    componentDidMount() {
+        this.setState({isLoading: true});
 
+        fetch('https://healthyfoodssabra.herokuapp.com/api/products')
+            .then(response => response.json())
+            .then(data => this.setState({allProducts: data}));
+
+    }
+
+// ====================
 
     render() {
 
@@ -253,7 +260,7 @@ export default class Home extends Component {
 
                         const items = this.state.selectedItems;
                         items.push(item)
-                        this.setState({newselect:item.name})
+                        this.setState({newselect:item.productName})
                         this.setState({ selectedItems: items });
 
                     }}
@@ -271,8 +278,8 @@ export default class Home extends Component {
                         borderRadius: 5,
                     }}
                     itemTextStyle={{ color: '#222' }}
-                    itemsContainerStyle={{ maxHeight: 140 }}
-                    items={items}
+                    itemsContainerStyle={{ maxHeight: 100 }}
+                    items={this.state.allProducts}
                     // defaultIndex={2}
                     resetValue={false}
                     textInputProps={
@@ -373,6 +380,8 @@ export default class Home extends Component {
                             <View style={styles.photoOption}>
                                 <TouchableOpacity onPress={() => {
                                     this.props.navigation.push('OCR');
+
+                                    console.log(this.state.allProducts)
                                 }}>
                                     <View style={{alignItems:'center'}}>
                                         <Image  style={{width:"75%",height:"100%", resizeMode:'stretch'}} source={require('../assets/images/photo.png')}/>
