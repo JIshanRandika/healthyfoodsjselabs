@@ -1,10 +1,13 @@
 import React from "react";
 import { createAppContainer } from 'react-navigation';
-import {createStackNavigator, HeaderBackButton} from 'react-navigation-stack';
+import {createStackNavigator, HeaderBackButton,} from 'react-navigation-stack';
 
-import { PermissionsAndroid, Text, Alert, StyleSheet, View } from 'react-native';
+import {PermissionsAndroid, Text, Alert, StyleSheet, View, Button, Image, Dimensions,Linking} from 'react-native';
 
-
+// import { createDrawerNavigator } from '@react-navigation/drawer';
+// import { NavigationContainer } from '@react-navigation/native';
+import { SideMenuView } from "react-native-navigation-drawer-extension";
+import Drawer from 'react-native-drawer'
 
 export async function request_location_runtime_permission() {
 
@@ -33,20 +36,10 @@ export async function request_location_runtime_permission() {
 
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             Alert.alert(
-                "Permission Granted","This application is still under development process. We hope you valuable feedback for future improvements." +
-                "\n\nYou can directly contact our developer team JSE Labs." +
-                "\n\nWebsite: https://healthyfoods-jselabs.github.io/HealthyFoods.Web/" +
-                "\n\nEmail: healthy.foods.susl@gmail.com" +
-                "\n\nFacebook: www.facebook.com/Healthy-Foods-107676938322921" +
-                "\n\nInstagram: healthyfoodssusl" +
-                "\n\nYoutube: https://www.youtube.com/channel/UC_B6PoKqoY04-KbU8Iu1k6g" +
-                "\n\nWhatsapp: +94715757700(Ishan)\n                     +94710642428(Charith)");
+                "Permission Granted","Wellcome to Healthy Foods");
         }
         else {
-            Alert.alert("Permission Not Granted","This application is still under development process. We hope you valuable feedback for future improvements." +
-                "\n\nYou can directly contact our developer team JSE Labs." +
-                "\n\nEmail: healthy.foods.susl@gmail.com" +
-                "\nWhatsapp: +94715757700(Ishan)\n                     +94710642428(Charith)");
+            Alert.alert("Permission Not Granted","Wellcome to Healthy Foods");
         }
     } catch (err) {
         console.warn(err)
@@ -135,7 +128,146 @@ export default class App extends React.Component {
     async componentDidMount() {
         await request_location_runtime_permission()
     }
+
+
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //
+    //         drowerIsOpen:true,
+    //
+    //     }
+    // }
+    closeControlPanel = () => {
+        this._drawer.close()
+    };
+    openControlPanel = () => {
+        this._drawer.open()
+    };
     render() {
-        return <AppContainer />;
+        return (
+            <Drawer
+                open={false}
+                type="static"
+                content={
+
+
+                    <View style={{flex: 1,backgroundColor: "#2B2D42"}}>
+                        <View style={{alignItems:'center'}}>
+                            <Image style={{
+                                width: Dimensions.get('window').width/2,
+                                height: (Dimensions.get('window').width/2) / 1.3,marginTop:"50%",alignItems:'center'
+                            }} source={require('./assets/images/logoWhite.png')}/>
+                        </View>
+
+
+                        {/*<View style={{backgroundColor: "#107e7d",padding:15,marginTop:20}}>*/}
+                        {/*   */}
+
+                        {/*</View>*/}
+
+                        <View style={{marginTop:5}}>
+                            <Button
+                                color="#107e7d"
+                                contentStyle={{ color: "#107e7d", fontSize: 8 }}
+                                title="Website"
+                                onPress={() => {
+                                    Linking.openURL('https://healthyfoods-jselabs.github.io/HealthyFoods.Web/')
+                                    // this._drawer.close();
+                                    // this.props.navigation.push(Home);
+                                }}
+                            />
+                        </View>
+
+                        <View style={{marginTop:5}}>
+                            <Button
+                                color="#107e7d"
+                                contentStyle={{ color: "#107e7d", fontSize: 8 }}
+                                title="Like us on Facebook"
+                                onPress={() => {
+                                    Linking.openURL('https://www.facebook.com/Healthy-Foods-107676938322921')
+                                    // this._drawer.close();
+                                    // this.props.navigation.push(Home);
+                                }}
+                            />
+                        </View>
+
+                        <View style={{marginTop:5}}>
+                            <Button
+                                color="#107e7d"
+                                contentStyle={{ color: "#107e7d", fontSize: 8 }}
+                                title="Follow us On Instagram"
+                                onPress={() => {
+                                    Linking.openURL('https://www.instagram.com/invites/contact/?i=19oyl8liakjdb&utm_content=mq3uytq')
+                                    // this._drawer.close();
+                                    // this.props.navigation.push(Home);
+                                }}
+                            />
+                        </View>
+
+
+                        <View style={{marginTop:5}}>
+                            <Button
+                                color="#107e7d"
+                                contentStyle={{ color: "#107e7d", fontSize: 8}}
+                                title="Subscribe us On Yourtube"
+                                onPress={() => {
+                                    Linking.openURL('https://www.youtube.com/channel/UC_B6PoKqoY04-KbU8Iu1k6g')
+                                    // this._drawer.close();
+                                    // this.props.navigation.push(Home);
+                                }}
+                            />
+                        </View>
+                        <View style={{marginTop:5}}>
+                            <Button
+                                color="#107e7d"
+                                contentStyle={{ color: "#107e7d", fontSize: 8}}
+                                title="Contact us on WhatsApp"
+                                onPress={() => {
+                                    Linking.openURL('https://wa.me/+94715757700')
+                                    // this._drawer.close();
+                                    // this.props.navigation.push(Home);
+                                }}
+                            />
+                        </View>
+                        <Text style={{color:'white',textAlign:'center',fontSize:10,marginTop:"20%"}}>healthy.foods.susl@gmail.com</Text>
+
+                    </View>
+
+
+
+
+                }
+
+                ref={(ref) => this._drawer = ref}
+                // tapToClose={true}
+                openDrawerOffset={0.45} // 20% gap on the right side of drawer
+                panCloseMask={0.2}
+                closedDrawerOffset={-3}
+                styles={{color: '#000000', shadowOpacity: 0.1, shadowRadius: 3,backgroundColor: "#107e7d"}}
+                tweenHandler={(ratio) => ({
+                    main: { opacity:(2-ratio)/2 }
+                })}
+            >
+                <View style={{flexDirection:"row",flex:1}}>
+
+                            <Button
+                                color="#2B2D42"
+                                title=""
+                                onPress={() => {this._drawer.open()}}
+                            />
+
+
+                    <AppContainer />
+                    {/*<Button*/}
+                    {/*    color="#2B2D42"*/}
+                    {/*    title=""*/}
+                    {/*    onPress={() => {this._drawer.open()}}*/}
+                    {/*/>*/}
+                </View>
+
+            </Drawer>
+
+        );
     }
 }

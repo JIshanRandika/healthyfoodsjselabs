@@ -3,6 +3,9 @@ import {Button, StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, F
 import * as Progress from 'react-native-progress';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 
+import { SideMenuView } from "react-native-navigation-drawer-extension";
+
+import Drawer from 'react-native-drawer'
 // header: { visible: false }
 
 // const image = { uri: "https://reactjs.org/logo-og.png" };
@@ -145,7 +148,12 @@ export default class Home extends Component {
     }
 
 // ====================
-
+    closeControlPanel = () => {
+        this._drawer.close()
+    };
+    openControlPanel = () => {
+        this._drawer.open()
+    };
     render() {
 
 
@@ -365,6 +373,7 @@ export default class Home extends Component {
 
 
         return (
+
 
             <View style={styles.container}>
                 <ImageBackground source={require('../assets/images/background.png')} resizeMode="cover" style={styles.image}>
