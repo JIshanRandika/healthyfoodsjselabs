@@ -174,6 +174,8 @@ export default class Screen extends React.Component {
 
                             </SafeAreaView>
                         </View>
+                        <View style={{flex:1}}>
+                        </View>
 
                     </ImageBackground>
                 </View>
