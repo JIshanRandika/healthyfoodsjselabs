@@ -4,8 +4,7 @@ import {createStackNavigator, HeaderBackButton,} from 'react-navigation-stack';
 
 import {PermissionsAndroid, Text, Alert, StyleSheet, View, Button, Image, Dimensions,Linking} from 'react-native';
 
-// import { createDrawerNavigator } from '@react-navigation/drawer';
-// import { NavigationContainer } from '@react-navigation/native';
+
 import { SideMenuView } from "react-native-navigation-drawer-extension";
 import Drawer from 'react-native-drawer'
 
@@ -36,10 +35,10 @@ export async function request_location_runtime_permission() {
 
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             Alert.alert(
-                "Permission Granted","Wellcome to Healthy Foods");
+                "Permission Granted","Welcome to Healthy Foods !");
         }
         else {
-            Alert.alert("Permission Not Granted","Wellcome to Healthy Foods");
+            Alert.alert("Permission Not Granted","Welcome to Healthy Foods !");
         }
     } catch (err) {
         console.warn(err)
@@ -48,10 +47,7 @@ export async function request_location_runtime_permission() {
 
 import Splash from './views/Splash'
 import OCR from './views/OCR'
-// import Results from './views/Results'
-// import ResultsView from './views/ResultsView'
 import YourResult from './views/YourResult'
-// import SearchOption from './views/SearchOption'
 import Home from './views/Home'
 
 
@@ -64,27 +60,19 @@ const AppNavigator = createStackNavigator(
             navigationOptions: ({navigation}) => ({
                 title: '',
                 headerStyle: styles.headerStyle,
-                // headerTitle: <Text style={{fontSize: 18,
-                //     fontWeight: "bold",
-                //     // textAlign: "center",
-                //     color: "white"}}>Search by Image</Text>,
+
                 headerTintColor: 'white',
-                // headerLeft : <HeaderBackButton tintColor={'white'} onPress={() => {navigation.navigate('Home')}}></HeaderBackButton>,
                 headerRight: null,
 
             })
         },
-        // SearchOption:SearchOption,
-        // Results:Results,
-        // ResultsView:ResultsView,
+
         YourResult:{
             screen:YourResult,
             navigationOptions: ({navigation}) => ({
                 title: '',
                 headerStyle: styles.headerStyle,
                 headerTintColor: 'white',
-                // headerTitle: <Text>My home</Text>,
-                // headerLeft : styles.backButton,
                 headerRight: null,
 
             })
@@ -96,8 +84,6 @@ const AppNavigator = createStackNavigator(
                 title: '',
                 headerStyle: styles.headerStyle,
                 headerTintColor: 'white',
-                // headerTitle: <Text>My home</Text>,
-                // headerLeft : <HeaderBackButton  tintColor={'white'} onPress={() => {navigation.navigate('Splash')}}></HeaderBackButton>,
                 headerRight: null,
 
             })
@@ -130,14 +116,6 @@ export default class App extends React.Component {
     }
 
 
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //
-    //         drowerIsOpen:true,
-    //
-    //     }
-    // }
     closeControlPanel = () => {
         this._drawer.close()
     };
@@ -161,11 +139,6 @@ export default class App extends React.Component {
                         </View>
 
 
-                        {/*<View style={{backgroundColor: "#107e7d",padding:15,marginTop:20}}>*/}
-                        {/*   */}
-
-                        {/*</View>*/}
-
                         <View style={{marginTop:5}}>
                             <Button
                                 color="#107e7d"
@@ -173,8 +146,7 @@ export default class App extends React.Component {
                                 title="Website"
                                 onPress={() => {
                                     Linking.openURL('https://healthyfoods-jselabs.github.io/HealthyFoods.Web/')
-                                    // this._drawer.close();
-                                    // this.props.navigation.push(Home);
+
                                 }}
                             />
                         </View>
@@ -186,8 +158,7 @@ export default class App extends React.Component {
                                 title="Like us on Facebook"
                                 onPress={() => {
                                     Linking.openURL('https://www.facebook.com/Healthy-Foods-107676938322921')
-                                    // this._drawer.close();
-                                    // this.props.navigation.push(Home);
+
                                 }}
                             />
                         </View>
@@ -199,8 +170,7 @@ export default class App extends React.Component {
                                 title="Follow us On Instagram"
                                 onPress={() => {
                                     Linking.openURL('https://www.instagram.com/invites/contact/?i=19oyl8liakjdb&utm_content=mq3uytq')
-                                    // this._drawer.close();
-                                    // this.props.navigation.push(Home);
+
                                 }}
                             />
                         </View>
@@ -210,11 +180,10 @@ export default class App extends React.Component {
                             <Button
                                 color="#107e7d"
                                 contentStyle={{ color: "#107e7d", fontSize: 8}}
-                                title="Subscribe us On Yourtube"
+                                title="Subscribe us On Youtube"
                                 onPress={() => {
                                     Linking.openURL('https://www.youtube.com/channel/UC_B6PoKqoY04-KbU8Iu1k6g')
-                                    // this._drawer.close();
-                                    // this.props.navigation.push(Home);
+
                                 }}
                             />
                         </View>
@@ -242,7 +211,8 @@ export default class App extends React.Component {
                 ref={(ref) => this._drawer = ref}
                 // tapToClose={true}
                 openDrawerOffset={0.45} // 20% gap on the right side of drawer
-                panCloseMask={0.2}
+                panCloseMask={0.95}
+                // panOpenMask={0.2}
                 closedDrawerOffset={-3}
                 styles={{color: '#000000', shadowOpacity: 0.1, shadowRadius: 3,backgroundColor: "#107e7d"}}
                 tweenHandler={(ratio) => ({
@@ -259,11 +229,6 @@ export default class App extends React.Component {
 
 
                     <AppContainer />
-                    {/*<Button*/}
-                    {/*    color="#2B2D42"*/}
-                    {/*    title=""*/}
-                    {/*    onPress={() => {this._drawer.open()}}*/}
-                    {/*/>*/}
                 </View>
 
             </Drawer>

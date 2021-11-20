@@ -6,9 +6,7 @@ import SearchableDropdown from 'react-native-searchable-dropdown';
 import { SideMenuView } from "react-native-navigation-drawer-extension";
 
 import Drawer from 'react-native-drawer'
-// header: { visible: false }
 
-// const image = { uri: "https://reactjs.org/logo-og.png" };
 var items = [
     {
         id: 1,
@@ -52,8 +50,6 @@ const App = () => (
     <View style={styles.container}>
         <ImageBackground source={require('../assets/images/background.png')} resizeMode="cover" style={styles.image}>
             <Text style={styles.titleText}>Quick Search Your Product</Text>
-            {/*<Text style={styles.text}>Inside</Text>*/}
-            {/*<Text style={styles.text}>Inside</Text>*/}
         </ImageBackground>
     </View>
 );
@@ -125,14 +121,7 @@ export default class Home extends Component {
             processStart:null,
             processComplete:true,
             selectedItems: [
-                // {
-                //     id: 7,
-                //     name: 'Go',
-                // },
-                // {
-                //     id: 8,
-                //     name: 'Swift',
-                // }
+
             ]
         }
     }
@@ -141,7 +130,7 @@ export default class Home extends Component {
     componentDidMount() {
         this.setState({isLoading: true});
 
-        fetch('https://healthyfoodssabra.herokuapp.com/api/products')
+            fetch('https://healthyfoodssabra.herokuapp.com/api/products')
             .then(response => response.json())
             .then(data => this.setState({allProducts: data}));
 
@@ -403,8 +392,6 @@ export default class Home extends Component {
                     {this.state.productSelected && (
                     <Text style={styles.searchByImage}>Search by Image</Text>
                     )}
-
-                    {/*<Text style={styles.text}>Inside</Text>*/}
                 </ImageBackground>
             </View>
 

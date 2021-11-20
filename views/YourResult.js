@@ -14,14 +14,10 @@ import {
 } from 'react-native';
 import * as Progress from 'react-native-progress';
 
-
-
 export default class Screen extends React.Component {
 
     render() {
 
-        // const [isConnect, setIsConnect] = useState(false);
-        // const onPressIngredient = () => setCount(prevCount => prevCount + 1);
 
         var connection = false;
         const Item = ({ item, backgroundColor, textColor }) => (
@@ -57,7 +53,7 @@ export default class Screen extends React.Component {
             >
 
 
-                <Text style={{fontSize: 20, fontWeight:"bold", textAlign:"center",color:"#ffffff"}}>{item.ingredientName.charAt(0).toUpperCase() + item.ingredientName.slice(1)} is {item.status ==="Healthy"? "Safe":"Risky"}</Text>
+                <Text style={{fontSize: 20, fontWeight:"bold", textAlign:"center",color:"#ffffff"}}>{item.ingredientName.charAt(0).toUpperCase() + item.ingredientName.slice(1)} is {item.status ==="Healthy"? "Safe":item.status ==="Unhealthy"? "Risky":"Unknown"}</Text>
 
 
             </TouchableOpacity>
@@ -88,18 +84,15 @@ export default class Screen extends React.Component {
             countAll++;
             if (data.status=='Unknown'){
                 countUnknown++;
-                // console.log(data.status)
-                // printStatus = 'Unhealthy'
+
             }
             if (data.status=='Healthy'){
                 countHealthy++;
-                // console.log(data.status)
-                // printStatus = 'Unhealthy'
+
             }
             if (data.status=='Unhealthy'){
                 countUnhealthy++;
-                // console.log(data.status)
-                // printStatus = 'Unhealthy'
+
             }
             avg=countUnhealthy/(countAll-countUnknown)
             if(avg>0.5){
@@ -120,8 +113,6 @@ export default class Screen extends React.Component {
                 return (
                     <Item
                         item={item}
-                        // onPress={() => setSelectedId(item._id)}
-                        // backgroundColor={{ backgroundColor }}
                         textColor={{ color }}
                     />
                 );
@@ -131,10 +122,6 @@ export default class Screen extends React.Component {
                 <View style={styles.bgcontainer}>
                     <ImageBackground source={require('../assets/images/background.png')} resizeMode="cover" style={styles.image}>
                         <Text style={styles.titleText}>Your Results</Text>
-
-                        {/*<View style={{flex:1}}>*/}
-
-                        {/*</View>*/}
 
                         <View style={{flex:7}}>
                             <SafeAreaView>

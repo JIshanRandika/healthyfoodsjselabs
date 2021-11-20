@@ -49,15 +49,6 @@ function OCR({navigation}) {
             );
             setText(recognizedText);
 
-            // ======
-            //
-            // var array = text.split(" ");
-            //
-            // console.log(array);
-            //
-            // checkIngredient(array);
-
-            // =======
 
         } catch (err) {
             console.error(err);
@@ -68,9 +59,7 @@ function OCR({navigation}) {
         setIsLoading(false);
         setProgress(0);
     };
-    // const tesseractOptions = {
 
-    // };
     const recognizeFromPicker = async (options = defaultPickerOptions) => {
         try {
             const image = await ImagePicker.openPicker(options);
@@ -107,8 +96,6 @@ function OCR({navigation}) {
 
 
     const checkIngredient = async (ingredientArray) => {
-        // fetch('/api/getsome')
-        //     .then(response => response.json())
 
         const requestOptions = {
             method: 'POST',
@@ -117,7 +104,6 @@ function OCR({navigation}) {
         };
 
         await fetch(`https://healthyfoodssabra.herokuapp.com/api/check`,requestOptions)
-            // http://192.168.8.100:8080/api/products
             .then(async response => {
                     const isJson = response.headers.get('content-type')?.includes('application/json');
 
@@ -128,8 +114,6 @@ function OCR({navigation}) {
 
                     ingredientListSet(data);
 
-                    // console.log(data)
-                    // return data;
 
                     // check for error response
                     if (!response.ok) {
@@ -145,13 +129,9 @@ function OCR({navigation}) {
             })
     }
 
-// =======================================================================
 
 
     return (
-
-        // <View style={styles.bgcontainer}>
-        //     <ImageBackground source={require('../assets/images/background.png')} resizeMode="cover" style={styles.bgimage}>
 
                 <View style={styles.container}>
                     <View style={styles.bgcontainer}>
@@ -208,69 +188,8 @@ function OCR({navigation}) {
 
                                 )}
                                 <View style={styles.button}>
-                                    {/*<Button*/}
-                                    {/*    disabled={isLoading}*/}
-                                    {/*    title="Check"*/}
-                                    {/*    onPress={() => {*/}
 
-                                    {/*        var array = text.split(" ");*/}
-
-
-                                    {/*        var arraytest = ["HA", "HB","UA","A", "B", "UB", "UC","HC","HD","HE","UC","UD","UE", "UKA","HKD","HKE","HKC"]*/}
-                                    {/*        checkIngredient(arraytest);*/}
-
-                                    {/*        console.log(arraytest);*/}
-
-                                    {/*        navigation.navigate('Results')*/}
-
-                                    {/*    }}*/}
-                                    {/*/>*/}
                                     <View style={{alignItems:"center"}}>
-                                        {/*<Text style={{fontSize:8, textAlign:"center", marginHorizontal:70}}>Process your data.</Text>*/}
-
-                                        {/*<View style={{marginTop:10,width:200,marginBottom:10}}>*/}
-                                        {/*    <Button*/}
-
-                                        {/*        disabled={isLoading}*/}
-                                        {/*        title="Process"*/}
-                                        {/*        onPress={() => {*/}
-                                        {/*            // var arraytest = ["HA", "HB","UA","A", "B", "UB", "UC","HC","HD","HE","UC","UD","UE", "UKA","HKD","HKE","HKC"]*/}
-
-                                        {/*            setIspProcessStart(true)*/}
-                                        {/*            processDelay();*/}
-
-                                        {/*            var dataFromLabel = text.toLowerCase();*/}
-
-                                        {/*            // var array = dataFromLabel.split(/([!,?,.])/);*/}
-
-                                        {/*            // var array = text.split(/([!,?,.])/);*/}
-
-                                        {/*            // ====*/}
-                                        {/*            var array = dataFromLabel.split(/([!,?,.])/);*/}
-
-                                        {/*            console.log(array);*/}
-
-
-                                        {/*            var newarray=[];*/}
-
-                                        {/*            var arrayLength = array.length;*/}
-                                        {/*            for (var i = 0; i < arrayLength; i++) {*/}
-                                        {/*                newarray.push(array[i].trim())*/}
-                                        {/*            }*/}
-
-                                        {/*            // ====*/}
-
-                                        {/*            console.log(newarray);*/}
-
-                                        {/*            checkIngredient(newarray);*/}
-
-
-
-                                        {/*        }}*/}
-                                        {/*    />*/}
-                                        {/*</View>*/}
-
-
 
 
                                         {!ispProcessStart && (
@@ -295,9 +214,6 @@ function OCR({navigation}) {
 
                                                                     var dataFromLabel = text.toLowerCase();
 
-                                                                    // var array = dataFromLabel.split(/([!,?,.])/);
-
-                                                                    // var array = text.split(/([!,?,.])/);
 
                                                                     // ====
                                                                     var array = dataFromLabel.split(/([!,?,.])/);
@@ -357,8 +273,6 @@ function OCR({navigation}) {
 
                                         )}
 
-                                        {/*<Text style={{fontSize:8, textAlign:"center", marginHorizontal:70,marginTop:10}}>View your Results.</Text>*/}
-
 
                                         {ispProcessStart && (
                                             <View style={styles.imageContainer}>
@@ -392,40 +306,6 @@ function OCR({navigation}) {
                                             </View>
                                         )}
 
-
-
-
-
-                                        {/*<View style={{width:200,marginTop:10}}>*/}
-                                        {/*    <Button*/}
-                                        {/*        disabled={isLoading}*/}
-                                        {/*        title="View Results"*/}
-                                        {/*        onPress={() => {*/}
-                                        {/*            setIsComplete(true)*/}
-                                        {/*            setIspProcessStart(null)*/}
-
-                                        {/*            navigation.navigate('YourResult',*/}
-                                        {/*                ingredientList*/}
-                                        {/*            )*/}
-
-                                        {/*        }}*/}
-                                        {/*    />*/}
-                                        {/*</View>*/}
-
-
-
-                                        {/*<View style={{width:200,marginTop:10}}>*/}
-                                        {/*    <Button*/}
-                                        {/*        disabled={isLoading}*/}
-                                        {/*        title="Search"*/}
-                                        {/*        onPress={() => {*/}
-
-                                        {/*            navigation.navigate('SearchOption'*/}
-                                        {/*            )*/}
-
-                                        {/*        }}*/}
-                                        {/*    />*/}
-                                        {/*</View>*/}
 
                                     </View>
 

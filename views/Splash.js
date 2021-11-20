@@ -59,8 +59,6 @@ export default class Myapp extends Component
                                     height: Dimensions.get('window').width / 1.3
                                 }} source={require('../assets/images/logo.png')}/>
                             </View>
-                            {/*<View style={{flex: ,}}>*/}
-                            {/*</View>*/}
                             <View style={{
                                 // flex: 1,
                                 alignSelf: 'center',
